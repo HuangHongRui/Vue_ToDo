@@ -1,0 +1,54 @@
+<html>
+  <head>
+  <meta charset = "UTF-8" />
+  </head>
+  <body>
+
+
+
+    <div id="app">
+      <div class="newTask">
+        <input type="text" v-model="newTodo" @keypress.enter="addTodo" />
+      </div>
+      <ol class="todos">
+        <li v-for="todo in todoList">
+          <input type = "checkbox" v-model = "todo.done"> {{ todo.title }}
+
+          <span v-if = "todo.done">已完成</span>
+          <span v-else>未完成</span>
+
+          <button @click="removeTodo(todo)">X</button>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Demo 点击计数
+      <div id="example-1">
+      <button v-on:click="counter += 1">增加 1</button>
+      <p>这个按钮被点击了 {{ counter  }} 次。</p>
+    </div>
+    -->
+<!--/* Demo2 方法事件处理
+<div id="example-2">
+  <!-- `greet` 是在下面定义的方法名
+  <button v-on:click="greet">Greet</button>
+</div>
+-->
+
+    <script src="bundle.js"></script>
+  </body>
+</html>
+
+
+
+<!--
+加一个 div#app，用于给 Vue 初始化
+div.newTask → input 用于让用户输入待办的内容
+ol.todos 用于容纳所有待办，每个待办就是一个 li
+-->
+
+<!--
+v-model="newTodo"   => 这一句将 input.value & data.newTodo [双向] 绑定起来了.
+1. nput.value 被用户改了，data.newTodo 就会变成一样的值；
+2. 只要 data.newTodo 被 JS 改了，input.value 就会变成一样的值。
+-->

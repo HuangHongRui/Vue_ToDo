@@ -6,33 +6,84 @@
 import Vue from 'vue'
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    newTodo: '',
-    todoList: []
-  },
-  created: function() { //保存
-      // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
-      window.onbeforeunload = ()=>{
-        let dataString = JSON.stringify(this.todoList);https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-        window.localStorage.setItem('myTodos', dataString);// 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
-      }
-  },
-  methods: {
-    addTodo: function() {
-      this.todoList.push({
-        title: this.newTodo,
-        createdAt: new Date(),
-        done: false
-      });
-      this.newTodo = ''
+    el: '#app',
+    data: {
+      newTodo: '',
+      todoList: []
     },
-    removeTodo: function(todo) {
-      let index = this.todoList.indexOf(todo)
-      this.todoList.splice(index,1)
+    methods: {
+        addTodo: function () {
+            this.todoList.push({
+                title: this.newTodo,
+                createTime: new Date().initDate("yyyy年-M月-D日 H:mm:ss"),
+                done: false
+            });
+            this.newTodo = '';
+        },
+        removeTodo: function (todo) {
+            let index = this.todoList.indexOf(todo);
+            this.todoList.splice(index,1)
+        }
+    },
+    created: function () {
+        window.onbeforeunload = ()=> {
+            let dataString = JSON.stringify(this.todoList);
+            window.localStorage.setItem('myTodos', dataString)
+        };
+        let oldDataString = window.localStorage.getItem('myTodos');
+        let oldData = JSON.parse(oldDataString);
+        this.todoList = oldData || [];
+
+        Date.prototype.initDate = function (arg) {
+            var a = {
+                "M": this.getMonth() + 1,
+                "D": this.getDate(),
+                "H": this.getHours(),
+                "mm": this.getMinutes(),
+                "S": this.getSeconds(),
+                "Q": Math.floor((this.getMonth() + 3) / 3),
+                "ss":this.getMilliseconds()
+            };
+            if (/(y+)/.test(arg))
+                arg = arg.replace(RegExp.$1, (this.getFullYear() + "")
+                    .substr(4 - RegExp.$1.length));
+            for (var k in a)
+                if (new RegExp("(" + k + ")").test(arg))
+                    arg = arg.replace(RegExp.$1, (RegExp.$1.length == 1) ? (a[k]) : (("00" + a[k])
+                        .substr(("" + a[k]).length)));
+            return arg;
+        }
     }
-  }
 });
+
+// var app = new Vue({
+//   el: '#app',
+//   data: {
+//     newTodo: '',
+//     todoList: []
+//   },
+//   created: function() { //保存
+//       // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
+//       window.onbeforeunload = ()=>{
+//         let dataString = JSON.stringify(this.todoList);https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
+//         window.localStorage.setItem('myTodos', dataString);// 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
+//       }
+//   },
+//   methods: {
+//     addTodo: function() {
+//       this.todoList.push({
+//         title: this.newTodo,
+//         createdAt: new Date(),
+//         done: false
+//       });
+//       this.newTodo = ''
+//     },
+//     removeTodo: function(todo) {
+//       let index = this.todoList.indexOf(todo)
+//       this.todoList.splice(index,1)
+//     }
+//   }
+// });
 
 /* 原
 var app = new Vue({

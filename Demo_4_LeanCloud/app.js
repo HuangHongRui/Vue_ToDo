@@ -33,18 +33,48 @@ var app = new Vue({
       password: ''
     }
   },
-  created: function() { //保存
-      // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
+
+  created: function() { 
       window.onbeforeunload = ()=>{
-        let dataString = JSON.stringify(this.todoList);https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-        window.localStorage.setItem('myTodos', dataString);// 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
-      }
-  },
+        let dataString = JSON.stringify(this.todoList);
+        window.localStorage.setItem('myTodos', dataString);
+      };
+
+      let oldDataString = window.localStorage.getItem('myTodos');
+      let oldData = JSON.parse(oldDataString);
+      this.todoList = oldData || [];
+
+      this.currentUser = this.getCurrentUser();
+
+      Date.prototype.initDate = function (arg) {
+          var a = {
+              "M": this.getMonth() + 1,
+              "D": this.getDate(),
+              "H": this.getHours(),
+              "mm": this.getMinutes(),
+              "S": this.getSeconds(),
+              "Q": Math.floor((this.getMonth() + 3) / 3),
+              "ss":this.getMilliseconds()
+          };
+          if (/(y+)/.test(arg))
+              arg = arg.replace(RegExp.$1, (this.getFullYear() + "")
+                  .substr(4 - RegExp.$1.length));
+          for (var k in a)
+              if (new RegExp("(" + k + ")").test(arg))
+                  arg = arg.replace(RegExp.$1, (RegExp.$1.length == 1) ? (a[k]) : (("00" + a[k])
+                      .substr(("" + a[k]).length)));
+          return arg;
+         };
+      this.currentUser = this.getCurrentUser()
+    },
+
   methods: {
     addTodo: function() {
       this.todoList.push({
         title: this.newTodo,
-        createdAt: new Date(),
+        // createdAt: new Date(),
+        //   username: this.loginedUser.attributes.username,
+        createTime: new Date().initDate("yyyy年-M月-D日 H:mm:ss"),
         done: false
       });
       this.newTodo = ''
@@ -66,18 +96,30 @@ var app = new Vue({
 
     login: function () {
         AV.User.logIn(this.formData.username, this.formData.password)
-            .then( (loginedUser) => {
-            this.currentUser = this.getCurrentUser();
-              console.log(loginedUser);
-            }, function (error) {
+          .then( (loginedUser) => {
+          this.currentUser = this.getCurrentUser();
+            console.log(loginedUser.attributes.username);
+          }, function (error) {
+            alert('登录失败')
         })
     },
 
-      // 判断用户是否已登录
+      // 如果不调用登出方法，当前用户的缓存将永久保存在客户端。
       getCurrentUser: function() {
+      let savecurrent = AV.User.current();
+      if (savecurrent) {
+         let { id, createdAt, attributes: {username} } = savecurrent
+         return { id, username, createdAt }
+      }
+      else {
+         return null
+      }
           let {id, createdAt, attributes: {username}} = AV.User.current()
           return {id, username, createdAt}
+       // let {id, createdAt, attributes: {username}} = AV.User.current();
+       //  return {id, username, createdAt}
       },
+
 
       //登出
       logout: function () {

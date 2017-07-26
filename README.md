@@ -6,4 +6,7 @@ O(∩_∩)O | JUST DO IT
 英文：https://vuejs.org/v2/guide/installation.html#NPM
 
 
-预览: [Demo3 _ 传送门](https://huanghongrui.github.io/Vue_ToDo/Demo_3_App/page.html)
+预览:  [Demo3 _ 传送门](https://huanghongrui.github.io/Vue_ToDo/Demo_3_App/page.html)
+
+预览:  [Demo4 _ 传送门](https://huanghongrui.github.io/Vue_ToDo/Demo_4_LeanCloud/page.html)
+

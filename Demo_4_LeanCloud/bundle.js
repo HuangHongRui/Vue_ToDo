@@ -302,21 +302,46 @@ var app = new _vue2.default({
             password: ''
         }
     },
+
     created: function created() {
         var _this = this;
 
-        //保存
-        // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
         window.onbeforeunload = function () {
-            var dataString = JSON.stringify(_this.todoList);https: //developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-            window.localStorage.setItem('myTodos', dataString); // 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
+            var dataString = JSON.stringify(_this.todoList);
+            window.localStorage.setItem('myTodos', dataString);
         };
+
+        var oldDataString = window.localStorage.getItem('myTodos');
+        var oldData = JSON.parse(oldDataString);
+        this.todoList = oldData || [];
+
+        this.currentUser = this.getCurrentUser();
+
+        Date.prototype.initDate = function (arg) {
+            var a = {
+                "M": this.getMonth() + 1,
+                "D": this.getDate(),
+                "H": this.getHours(),
+                "mm": this.getMinutes(),
+                "S": this.getSeconds(),
+                "Q": Math.floor((this.getMonth() + 3) / 3),
+                "ss": this.getMilliseconds()
+            };
+            if (/(y+)/.test(arg)) arg = arg.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in a) {
+                if (new RegExp("(" + k + ")").test(arg)) arg = arg.replace(RegExp.$1, RegExp.$1.length == 1 ? a[k] : ("00" + a[k]).substr(("" + a[k]).length));
+            }return arg;
+        };
+        this.currentUser = this.getCurrentUser();
     },
+
     methods: {
         addTodo: function addTodo() {
             this.todoList.push({
                 title: this.newTodo,
-                createdAt: new Date(),
+                // createdAt: new Date(),
+                //   username: this.loginedUser.attributes.username,
+                createTime: new Date().initDate("yyyy年-M月-D日 H:mm:ss"),
                 done: false
             });
             this.newTodo = '';
@@ -343,18 +368,34 @@ var app = new _vue2.default({
 
             _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
                 _this3.currentUser = _this3.getCurrentUser();
-                console.log(loginedUser);
-            }, function (error) {});
+                console.log(loginedUser.attributes.username);
+            }, function (error) {
+                alert('登录失败');
+            });
         },
 
-        // 判断用户是否已登录
+        // 如果不调用登出方法，当前用户的缓存将永久保存在客户端。
         getCurrentUser: function getCurrentUser() {
+            var savecurrent = _leancloudStorage2.default.User.current();
+            if (savecurrent) {
+                var _id = savecurrent.id,
+                    _createdAt = savecurrent.createdAt,
+                    _username = savecurrent.attributes.username;
+
+                return { id: _id, username: _username, createdAt: _createdAt };
+            } else {
+                return null;
+            }
+
             var _AV$User$current = _leancloudStorage2.default.User.current(),
                 id = _AV$User$current.id,
                 createdAt = _AV$User$current.createdAt,
                 username = _AV$User$current.attributes.username;
 
-            return { id: id, username: username, createdAt: createdAt };
+            return { id: id, username: username, createdAt: createdAt
+                // let {id, createdAt, attributes: {username}} = AV.User.current();
+                //  return {id, username, createdAt}
+            };
         },
 
         //登出

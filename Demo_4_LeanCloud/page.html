@@ -1,0 +1,99 @@
+<html>
+  <head>
+  <meta charset = "UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <style>
+          body {
+              margin: 0;
+              padding: 0;
+          }
+
+          #app {
+              margin: 150px auto;
+              border: solid 1px;
+              max-width: 300px;
+          }
+      </style>
+
+  </head>
+  <body>
+  <div id="app">
+<section id="signInAndSignUp">
+    <div>
+        <label><input type="radio" name="type" value="signUp" v-model="actionType"> 注册 </label>
+        <label><input type="radio" name="type" value="login" v-model="actionType">登录</label>
+    </div>
+    <div class="signUp" v-if="actionType ==='signUp'">
+        <form @submit.prevent="signUp">
+            <div class="formRow">
+                用户名<input type="text" v-model="formData.username">
+            </div>
+            <div class="formRow">
+                密码<input type="password" v-model="formData.password">
+            </div>
+            <div class="formActions">
+                <input type="submit" value="注册">
+            </div>
+        </form>
+    </div>
+    <div class="login" v-if="actionType ==='login'">
+        <form>
+            <div class="formRow">
+                用户名<input type="text">
+            </div>
+            <div class="formRow">
+                密码 <input type="password">
+            </div>
+            <div class="formActions">
+                <input type="submit" value="登录">
+            </div>
+        </form>
+    </div>
+</section>
+
+<section id="todo">
+      <div class="newTask">
+        <input type="text" v-model="newTodo" @keypress.enter="addTodo" />
+      </div>
+      <ol class="todos">
+        <li v-for="todo in todoList">
+          <input type = "checkbox" v-model = "todo.done"> {{ todo.title }}
+
+          <span v-if = "todo.done">已完成</span>
+          <span v-else>未完成</span>
+
+          <button @click="removeTodo(todo)">X</button>
+        </li>
+      </ol>
+
+</section>
+    <!-- Demo 点击计数
+      <div id="example-1">
+      <button v-on:click="counter += 1">增加 1</button>
+      <p>这个按钮被点击了 {{ counter  }} 次。</p>
+    </div>
+    -->
+<!--/* Demo2 方法事件处理
+<div id="example-2">
+  <!-- `greet` 是在下面定义的方法名
+  <button v-on:click="greet">Greet</button>
+</div>
+-->
+  </div>
+    <script src="bundle.js"></script>
+  </body>
+</html>
+
+
+
+<!--
+加一个 div#app，用于给 Vue 初始化
+div.newTask → input 用于让用户输入待办的内容
+ol.todos 用于容纳所有待办，每个待办就是一个 li
+-->
+
+<!--
+v-model="newTodo"   => 这一句将 input.value & data.newTodo [双向] 绑定起来了.
+1. nput.value 被用户改了，data.newTodo 就会变成一样的值；
+2. 只要 data.newTodo 被 JS 改了，input.value 就会变成一样的值。
+-->

@@ -18,7 +18,7 @@ var testObject = new TestObject();
 testObject.save({
     words: 'Hello World!'
 }).then(function(object) {
-    alert('LeanCloud Rocks!');
+    console.log('LeanCloud Rocks!');
 })
 
 var app = new Vue({
@@ -27,6 +27,7 @@ var app = new Vue({
     newTodo: '',
     todoList: [],
     actionType: 'signUp',
+    currentUser: null,
     formData: {
       username: '',
       password: ''
@@ -49,18 +50,41 @@ var app = new Vue({
       this.newTodo = ''
     },
     removeTodo: function(todo) {
-      let index = this.todoList.indexOf(todo)
+      let index = this.todoList.indexOf(todo);
       this.todoList.splice(index,1)
     },
     signUp: function() {
       let user = new AV.User();
       user.setUsername(this.formData.username);
       user.setPassword(this.formData.password);
-      user.signUp().then(function (loginedUser) {
-        console.log(loginedUser);
-      }, function(error) {
-      })
-    }
+      user.signUp().then((loginedUser) => {
+        this.currentUser = this.getCurrentUser()
+      }, function (error) {
+          alert('注册失败')
+      });
+    },
+
+    login: function () {
+        AV.User.logIn(this.formData.username, this.formData.password)
+            .then( (loginedUser) => {
+            this.currentUser = this.getCurrentUser();
+              console.log(loginedUser);
+            }, function (error) {
+        })
+    },
+
+      // 判断用户是否已登录
+      getCurrentUser: function() {
+          let {id, createdAt, attributes: {username}} = AV.User.current()
+          return {id, username, createdAt}
+      },
+
+      //登出
+      logout: function () {
+          AV.User.logOut();
+          this.currentUser = null;
+          window.location.reload()
+      }
   }
 });
 

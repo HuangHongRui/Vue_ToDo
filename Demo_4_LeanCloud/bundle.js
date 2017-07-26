@@ -278,61 +278,92 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var APP_ID = 'csqhAn20paClt8VylwLQLkFb-gzGzoHsz';
 var APP_KEY = 'PrurrzrjeRLwTlEMMUISf17c';
 _leancloudStorage2.default.init({
-  appId: APP_ID,
-  appKey: APP_KEY
+    appId: APP_ID,
+    appKey: APP_KEY
 });
 
 var TestObject = _leancloudStorage2.default.Object.extend('TestObject');
 var testObject = new TestObject();
 testObject.save({
-  words: 'Hello World!'
+    words: 'Hello World!'
 }).then(function (object) {
-  alert('LeanCloud Rocks!');
+    console.log('LeanCloud Rocks!');
 });
 
 var app = new _vue2.default({
-  el: '#app',
-  data: {
-    newTodo: '',
-    todoList: [],
-    actionType: 'signUp',
-    formData: {
-      username: '',
-      password: ''
-    }
-  },
-  created: function created() {
-    var _this = this;
+    el: '#app',
+    data: {
+        newTodo: '',
+        todoList: [],
+        actionType: 'signUp',
+        currentUser: null,
+        formData: {
+            username: '',
+            password: ''
+        }
+    },
+    created: function created() {
+        var _this = this;
 
-    //保存
-    // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
-    window.onbeforeunload = function () {
-      var dataString = JSON.stringify(_this.todoList);https: //developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
-      window.localStorage.setItem('myTodos', dataString); // 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
-    };
-  },
-  methods: {
-    addTodo: function addTodo() {
-      this.todoList.push({
-        title: this.newTodo,
-        createdAt: new Date(),
-        done: false
-      });
-      this.newTodo = '';
+        //保存
+        // onbeforeunload文档：https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload
+        window.onbeforeunload = function () {
+            var dataString = JSON.stringify(_this.todoList);https: //developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON
+            window.localStorage.setItem('myTodos', dataString); // 看文档https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage
+        };
     },
-    removeTodo: function removeTodo(todo) {
-      var index = this.todoList.indexOf(todo);
-      this.todoList.splice(index, 1);
-    },
-    signUp: function signUp() {
-      var user = new _leancloudStorage2.default.User();
-      user.setUsername(this.formData.username);
-      user.setPassword(this.formData.password);
-      user.signUp().then(function (loginedUser) {
-        console.log(loginedUser);
-      }, function (error) {});
+    methods: {
+        addTodo: function addTodo() {
+            this.todoList.push({
+                title: this.newTodo,
+                createdAt: new Date(),
+                done: false
+            });
+            this.newTodo = '';
+        },
+        removeTodo: function removeTodo(todo) {
+            var index = this.todoList.indexOf(todo);
+            this.todoList.splice(index, 1);
+        },
+        signUp: function signUp() {
+            var _this2 = this;
+
+            var user = new _leancloudStorage2.default.User();
+            user.setUsername(this.formData.username);
+            user.setPassword(this.formData.password);
+            user.signUp().then(function (loginedUser) {
+                _this2.currentUser = _this2.getCurrentUser();
+            }, function (error) {
+                alert('注册失败');
+            });
+        },
+
+        login: function login() {
+            var _this3 = this;
+
+            _leancloudStorage2.default.User.logIn(this.formData.username, this.formData.password).then(function (loginedUser) {
+                _this3.currentUser = _this3.getCurrentUser();
+                console.log(loginedUser);
+            }, function (error) {});
+        },
+
+        // 判断用户是否已登录
+        getCurrentUser: function getCurrentUser() {
+            var _AV$User$current = _leancloudStorage2.default.User.current(),
+                id = _AV$User$current.id,
+                createdAt = _AV$User$current.createdAt,
+                username = _AV$User$current.attributes.username;
+
+            return { id: id, username: username, createdAt: createdAt };
+        },
+
+        //登出
+        logout: function logout() {
+            _leancloudStorage2.default.User.logOut();
+            this.currentUser = null;
+            window.location.reload();
+        }
     }
-  }
 });
 
 /* 原

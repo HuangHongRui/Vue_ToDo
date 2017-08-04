@@ -1,237 +1,237 @@
 <html>
   <head>
-  <meta charset = "UTF-8" />
-	  <title>ToDo</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <style>
-          body {
-              padding:0;
-              font-size: 20px;
-              margin: 0;
-          }
+    <meta charset = "UTF-8" />
+    <title>ToDo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      body {
+        padding:0;
+        font-size: 20px;
+        margin: 0;
+      }
 
-          #app {
-              margin: auto;
-              margin-top: 150px;
-              max-width: 600px;
-              /*border:solid  2px;*/
-          }
-          .logo {
-              position: relative;
-              left: 50%;
-              transform: translateX(-50%);
-              background-size: 272px 92px;
-              width: 272px;
-              height:120px;
-              background: url(https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png) 0% 0% / 100% no-repeat
-          }
-          .newTask input {
-              padding:5px 10px;
-              width: 100%;
-              border-radius: 4px;
-              border:1px solid rgba(0,0,255,0.5);
-              box-shadow:inset 0 0 5px 2px rgba(0,0,255,0.1);
-              outline: none;
-          }
-          .newTask input:hover {
-              border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9 !important;
-              box-shadow: inset 0 0 5px 5px rgba(0, 0, 255, 0.2);
-          }
-          section #ctText {
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              padding:5px 0;
-              /*box-shadow: inset 0 0 5px 5px rgba(255, 255, 0, 0.3);*/
-          }
+      #app {
+        margin: auto;
+        margin-top: 150px;
+        max-width: 600px;
+        /*border:solid  2px;*/
+      }
+      .logo {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        background-size: 272px 92px;
+        width: 272px;
+        height:120px;
+        background: url(https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png) 0% 0% / 100% no-repeat
+      }
+      .newTask input {
+        padding:5px 10px;
+        width: 100%;
+        border-radius: 4px;
+        border:1px solid rgba(0,0,255,0.5);
+        box-shadow:inset 0 0 5px 2px rgba(0,0,255,0.1);
+        outline: none;
+      }
+      .newTask input:hover {
+        border-color: #a0a0a0 #b9b9b9 #b9b9b9 #b9b9b9 !important;
+        box-shadow: inset 0 0 5px 5px rgba(0, 0, 255, 0.2);
+      }
+      section #ctText {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:5px 0;
+        /*box-shadow: inset 0 0 5px 5px rgba(255, 255, 0, 0.3);*/
+      }
 
-          .todos {
-              /*border:solid  1px;*/
-              padding:10px 10px;
-          }
+      .todos {
+        /*border:solid  1px;*/
+        padding:10px 10px;
+      }
 
-          .box {
-              margin: 0 !important;
-              width: 30px;
-              height: 30px;
-          }
-          button {
-              padding: 0;
-              width: 31px;
-              height: 31px;
-              font-weight: bold;
-              color: #f00;
-          }
+      .box {
+        margin: 0 !important;
+        width: 30px;
+        height: 30px;
+      }
+      button {
+        padding: 0;
+        width: 31px;
+        height: 31px;
+        font-weight: bold;
+        color: #f00;
+      }
 
-          #todo .showUser {
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              font-weight:800;
-          }
+      #todo .showUser {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight:800;
+      }
 
-          #todo button.out {
-      	    /*position: absolute;*/
-			/*top: 10px;*/
-			/*right: 10px;*/
-            margin: 0 10px;
-			color: cornflowerblue;
-          	border: 1px solid rgba(0,0,255,0.5);
-		    width: 60px;
-		    border-radius: 4px;
-		    box-shadow: inset 0 0 5px 2px rgba(0, 0, 255, 0.1);
-		    background-color: white;
-          }
+      #todo button.out {
+        /*position: absolute;*/
+        /*top: 10px;*/
+        /*right: 10px;*/
+        margin: 0 10px;
+        color: cornflowerblue;
+        border: 1px solid rgba(0,0,255,0.5);
+        width: 60px;
+        border-radius: 4px;
+        box-shadow: inset 0 0 5px 2px rgba(0, 0, 255, 0.1);
+        background-color: white;
+      }
 
-          #signInAndSignUp {
-              background-image: url(2.jpeg);
-			    position: fixed;
-			    top: 0;
-			    left: 0;
-			    width: 100%;
-			    height: 100%;
-			    display: flex;
-			    background-size: cover;
-			    background-attachment: scroll;
-			    align-items: center;
-			    justify-content: center;
-			    background-color: tomato;
-			    border: 1px solid;
-          }
+      #signInAndSignUp {
+        background-image: url(2.jpeg);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-size: cover;
+        background-attachment: scroll;
+        align-items: center;
+        justify-content: center;
+        background-color: tomato;
+        border: 1px solid;
+      }
 
-          #signInAndSignUp .ct {
-              color: #fff;
-              text-align: center;
-              position: relative;
-              min-width: 375px;
-              min-height: 420px;
-              padding:80px 5px;
-              border-radius: 10px;
-              box-shadow: 0 0 30px 10px rgba(0,0,0,0.6);
-              background-image: url(1.jpeg);
-              opacity: 0.8;
-          }
+      #signInAndSignUp .ct {
+        color: #fff;
+        text-align: center;
+        position: relative;
+        min-width: 375px;
+        min-height: 420px;
+        padding:80px 5px;
+        border-radius: 10px;
+        box-shadow: 0 0 30px 10px rgba(0,0,0,0.6);
+        background-image: url(1.jpeg);
+        opacity: 0.8;
+      }
 
-          .formRow {
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              justify-content: center;
-              margin: 10px ;
-              cursor: default;
-          }
+      .formRow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 10px ;
+        cursor: default;
+      }
 
-          .formRow input {
-              background: none;
-              border: none;
-              border-bottom: solid #8c8c8c 2px;
-              outline:medium;
-          }
+      .formRow input {
+        background: none;
+        border: none;
+        border-bottom: solid #8c8c8c 2px;
+        outline:medium;
+      }
 
-          .formActions input{
-              width: 70%;
-              line-height:30px;
-              background: darkslateblue;
-              margin-top: 40px;
-              font-weight: 800;
-              opacity: 0.7;
-              border-radius: 5px;
-              color: #eee;
-          }
+      .formActions input{
+        width: 70%;
+        line-height:30px;
+        background: darkslateblue;
+        margin-top: 40px;
+        font-weight: 800;
+        opacity: 0.7;
+        border-radius: 5px;
+        color: #eee;
+      }
 
-          .formActions input:hover {
-          	opacity: 1;
-          	box-shadow:  0 0 15px 5px rgba(0, 0, 0, 0.5);
-          	color: #000
-          }
+      .formActions input:hover {
+        opacity: 1;
+        box-shadow:  0 0 15px 5px rgba(0, 0, 0, 0.5);
+        color: #000
+      }
 
-          .tab {
-              position: absolute;
-              bottom: 0;
-              left: 50%;
-              transform: translateX(-50%);
-          }
-          .tab label {
-              opacity: 0.8;
-              border-radius: 5px;
-              cursor: pointer;
-              padding: 10px
-          }
-          .tab label:hover {
-          	opacity: 1;
-          	color: #000
-          }
-      </style>
+      .tab {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .tab label {
+        opacity: 0.8;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px
+      }
+      .tab label:hover {
+        opacity: 1;
+        color: #000
+      }
+    </style>
 
   </head>
   <body>
-  <div id="app">
-<section id="signInAndSignUp" v-if="!currentUser">
-    <div class="ct">
-    <div class="tab">
-        <label><input type="radio" name="type" value="signUp" v-model="actionType"> 注册 </label>
-        <label> 登录 <input type="radio" name="type" value="login" v-model="actionType"></label>
-    </div>
-    <div class="signUp" v-if="actionType ==='signUp'">
-        <form @submit.prevent="signUp">
-            <div class="formRow">
+    <div id="app">
+      <section id="signInAndSignUp" v-if="!currentUser">
+        <div class="ct">
+          <div class="tab">
+            <label><input type="radio" name="type" value="signUp" v-model="actionType"> 注册 </label>
+            <label> 登录 <input type="radio" name="type" value="login" v-model="actionType"></label>
+          </div>
+          <div class="signUp" v-if="actionType ==='signUp'">
+            <form @submit.prevent="signUp">
+              <div class="formRow">
                 用户名<input type="text" v-model="formData.username">
-            </div>
-            <div class="formRow">
+              </div>
+              <div class="formRow">
                 密码<input type="password" v-model="formData.password">
-            </div>
-            <div class="formActions">
+              </div>
+              <div class="formActions">
                 <input type="submit" value="注册">
-            </div>
-        </form>
-    </div>
-    <div class="login" v-if="actionType ==='login'">
-        <form @submit.prevent="login">
-            <div class="formRow">
+              </div>
+            </form>
+          </div>
+          <div class="login" v-if="actionType ==='login'">
+            <form @submit.prevent="login">
+              <div class="formRow">
                 用户名<input type="text" v-model="formData.username">
-            </div>
-            <div class="formRow">
+              </div>
+              <div class="formRow">
                 密码<input type="password" v-model="formData.password">
-            </div>
-            <div class="formActions">
+              </div>
+              <div class="formActions">
                 <input type="submit" value="登录">
-            </div>
-        </form>
-    </div>
-    </div>
-</section>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
 
-<section id="todo" v-if="currentUser">
-  <div class="logo"></div>
-    <p class="showUser">{{ currentUser.username }}<button class="out" @click="logout"> 登出 </button></p>
-      <div class="newTask">
-        <input type="text" v-model="newTodo" @keypress.enter="addTodo" />
-      </div>
-      <ol class="todos">
-        <li id="ctText" v-for="todo in todoList">
-          <input class="box" type = "checkbox" v-model = "todo.done"> {{ todo.title }}
+      <section id="todo" v-if="currentUser">
+        <div class="logo"></div>
+        <p class="showUser">{{ currentUser.username }}<button class="out" @click="logout"> 登出 </button></p>
+        <div class="newTask">
+          <input type="text" v-model="newTodo" @keypress.enter="addTodo" />
+        </div>
+        <ol class="todos">
+          <li id="ctText" v-for="todo in todoList">
+            <input class="box" type = "checkbox" v-model = "todo.done"> {{ todo.title }}
 
-          <span v-if = "todo.done">已完成</span>
-          <span v-else>未完成</span>
-		<span class="createTime">创建时间: {{todo.createTime}}</span>
-          <button @click="removeTodo(todo)">X</button>
-        </li>
-      </ol>
+            <span v-if = "todo.done">已完成</span>
+            <span v-else>未完成</span>
+            <span class="createTime">创建时间: {{todo.createTime}}</span>
+            <button @click="removeTodo(todo)">X</button>
+          </li>
+        </ol>
 
-</section>
-    <!-- Demo 点击计数
+      </section>
+      <!-- Demo 点击计数
       <div id="example-1">
-      <button v-on:click="counter += 1">增加 1</button>
-      <p>这个按钮被点击了 {{ counter  }} 次。</p>
+        <button v-on:click="counter += 1">增加 1</button>
+        <p>这个按钮被点击了 {{ counter  }} 次。</p>
+      </div>
+      -->
+      <!--/* Demo2 方法事件处理
+      <div id="example-2">
+        <!-- `greet` 是在下面定义的方法名
+        <button v-on:click="greet">Greet</button>
+      </div>
+      -->
     </div>
-    -->
-<!--/* Demo2 方法事件处理
-<div id="example-2">
-  <!-- `greet` 是在下面定义的方法名
-  <button v-on:click="greet">Greet</button>
-</div>
--->
-  </div>
     <script src="bundle.js"></script>
   </body>
 </html>
